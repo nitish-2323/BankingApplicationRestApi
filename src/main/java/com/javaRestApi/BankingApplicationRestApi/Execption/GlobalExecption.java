@@ -30,5 +30,14 @@ public class GlobalExecption {
        obj.setDateTime(LocalDateTime.now());
        return new ResponseEntity<>(obj ,HttpStatus.NOT_ACCEPTABLE);
    }
+   @ExceptionHandler(UserNotFound.class)
+   public ResponseEntity<ExecptionDTO> userNotFound(Exception e ,WebRequest request){
+      ExecptionDTO obj = new ExecptionDTO();
+      obj.setStatus(HttpStatus.NOT_FOUND.value());
+      obj.setMsg(e.getMessage());
+      obj.setPath(request.getDescription(false));
+      obj.setDateTime(LocalDateTime.now());
+      return new ResponseEntity<>(obj,HttpStatus.NOT_FOUND);
+   }
 
 }

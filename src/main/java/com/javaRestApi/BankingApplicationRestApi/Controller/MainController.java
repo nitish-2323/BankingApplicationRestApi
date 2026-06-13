@@ -10,8 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +36,17 @@ public class MainController {
         responseDTO.setMydtos(customerDTOList);
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
 
+    }
+    @GetMapping("/userInfo/{customerId}")
+    public ResponseEntity<ResponseDTO> userInfo(CustomerDTO dto,@PathVariable long customerId){
+        CustomerDTO obj =mainservice.getInfo(dto,customerId);
+        responseDTO.setError(false);
+        responseDTO.setMsg("You can read info");
+        responseDTO.setStatusCode(HttpStatus.OK.value());
+        List<CustomerDTO> list =new ArrayList<>();
+        list.add(obj);
+        responseDTO.setMydtos(list);
+        return new ResponseEntity<>(responseDTO,HttpStatus.OK);
     }
 
 }
