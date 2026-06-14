@@ -48,5 +48,15 @@ public class MainController {
         responseDTO.setMydtos(list);
         return new ResponseEntity<>(responseDTO,HttpStatus.OK);
     }
-
+     @PutMapping("/userUpdate/{customerId}")
+    public ResponseEntity<ResponseDTO> userUpdate(@RequestBody CustomerDTO dto,@PathVariable long customerId){
+        CustomerDTO obj =mainservice.updateObj(dto,customerId);
+        responseDTO.setStatusCode(HttpStatus.FOUND.value());
+        responseDTO.setError(false);
+        responseDTO.setMsg("Update sucessfully");
+        List<CustomerDTO> list = new ArrayList<>();
+        list.add(obj);
+        responseDTO.setMydtos(list);
+        return new ResponseEntity<>(responseDTO,HttpStatus.OK);
+     }
 }

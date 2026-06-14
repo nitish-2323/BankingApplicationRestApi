@@ -21,14 +21,28 @@ public class Mainservice {
         }
     }
 
-    public CustomerDTO getInfo(CustomerDTO dto,long customerId) {
-      CustomerDTO obj=  mainRepositry.findBycustomerId(customerId);
-      if( obj == null){
-          throw  new UserNotFound("Invalid employee user ");
-      }
-      else {
-          return obj;
-      }
+    public CustomerDTO getInfo(CustomerDTO dto, long customerId) {
+        CustomerDTO obj = mainRepositry.findBycustomerId(customerId);
+        if (obj == null) {
+            throw new UserNotFound("Invalid employee user ");
+        } else {
+            return obj;
+        }
+    }
+
+    public CustomerDTO updateObj(CustomerDTO dto,long customerId) {
+        CustomerDTO obj = mainRepositry.findBycustomerId(customerId);
+        if (obj == null) {
+            throw new UserNotFound("CustomerId cannot found ");
+        }
+        obj.setFullName(dto.getFullName());
+        obj.setEmail(dto.getEmail());
+        obj.setPhoneNumber(dto.getPhoneNumber());
+        obj.setAddress(dto.getAddress());
+        obj.setAadhaarNumber(dto.getAadhaarNumber());
+        obj.setPanNumber(dto.getPanNumber());
+        return mainRepositry.save(obj);
+
     }
 }
 

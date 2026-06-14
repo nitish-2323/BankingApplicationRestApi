@@ -9,4 +9,6 @@ public interface MainRepositry extends JpaRepository<CustomerDTO,Integer> {
     boolean existsBycustomerId(int intExact);
 
     CustomerDTO findBycustomerId(Long customerId);
+
+
 }
