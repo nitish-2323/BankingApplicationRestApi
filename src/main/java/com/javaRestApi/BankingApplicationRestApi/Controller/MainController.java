@@ -59,4 +59,18 @@ public class MainController {
         responseDTO.setMydtos(list);
         return new ResponseEntity<>(responseDTO,HttpStatus.OK);
      }
+     @DeleteMapping("/deleteUser/{customerId}")
+     public ResponseEntity<ResponseDTO> Delete(@PathVariable long customerId){
+        CustomerDTO dto=  mainservice.delete(customerId);
+         responseDTO.setStatusCode(HttpStatus.OK.value());
+         responseDTO.setMsg("Deleted customer from database");
+         responseDTO.setError(false);
+         List<CustomerDTO> list = new ArrayList<>();
+         list.add(dto);
+         responseDTO.setMydtos(list);
+         return new ResponseEntity<>(responseDTO,HttpStatus.OK);
+
+     }
+
+
 }

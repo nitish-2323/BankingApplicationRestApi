@@ -4,6 +4,7 @@ import com.javaRestApi.BankingApplicationRestApi.Execption.UserExecption;
 import com.javaRestApi.BankingApplicationRestApi.Execption.UserNotFound;
 import com.javaRestApi.BankingApplicationRestApi.Model.CustomerDTO;
 import com.javaRestApi.BankingApplicationRestApi.Repositry.MainRepositry;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +43,16 @@ public class Mainservice {
         obj.setAadhaarNumber(dto.getAadhaarNumber());
         obj.setPanNumber(dto.getPanNumber());
         return mainRepositry.save(obj);
+
+    }
+    @Transactional
+    public CustomerDTO delete(long customerId) {
+           CustomerDTO obj =mainRepositry.findBycustomerId(customerId);
+           if(obj == null) {
+               throw new UserNotFound("customerId not found for delete");
+           }
+           mainRepositry.deleteByCustomerId(customerId);
+           return obj;
 
     }
 }

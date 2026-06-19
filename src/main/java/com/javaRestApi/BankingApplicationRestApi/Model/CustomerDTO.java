@@ -14,6 +14,7 @@ public class CustomerDTO {
     @Id
     private Long customerId;
     private String fullName;
+    private String password;
     private String email;
     private String phoneNumber;
     private String address;

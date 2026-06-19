@@ -11,4 +11,11 @@ public interface MainRepositry extends JpaRepository<CustomerDTO,Integer> {
     CustomerDTO findBycustomerId(Long customerId);
 
 
+    CustomerDTO findByFullName(String fullName);
+
+
+
+
+
+    CustomerDTO deleteByCustomerId(long customerId);
 }
