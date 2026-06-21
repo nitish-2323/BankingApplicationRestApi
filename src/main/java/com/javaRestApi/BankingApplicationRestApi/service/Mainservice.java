@@ -13,13 +13,14 @@ public class Mainservice {
     @Autowired
     private MainRepositry mainRepositry;
 
-    public CustomerDTO save(CustomerDTO dto) {
-        if (mainRepositry.existsBycustomerId(Math.toIntExact(dto.getCustomerId()))) {
+    public CustomerDTO save(CustomerDTO dto, long customerId) {
+       CustomerDTO obj = mainRepositry.findBycustomerId(customerId);
+       if(obj != null){
             throw new UserExecption("Id must be unique,plz check Customer id");
         } else {
-            CustomerDTO obj = mainRepositry.save(dto);
-            return obj;
-        }
+           return  mainRepositry.save(dto);
+
+       }
     }
 
     public CustomerDTO getInfo(CustomerDTO dto, long customerId) {

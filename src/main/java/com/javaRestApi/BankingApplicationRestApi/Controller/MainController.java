@@ -1,7 +1,5 @@
 package com.javaRestApi.BankingApplicationRestApi.Controller;
 
-import com.javaRestApi.BankingApplicationRestApi.Execption.GlobalExecption;
-import com.javaRestApi.BankingApplicationRestApi.Execption.UserExecption;
 import com.javaRestApi.BankingApplicationRestApi.Model.CustomerDTO;
 import com.javaRestApi.BankingApplicationRestApi.Model.ResponseDTO;
 import com.javaRestApi.BankingApplicationRestApi.Repositry.MainRepositry;
@@ -24,9 +22,9 @@ public class MainController {
   @Autowired
   private MainRepositry repositry;
 
-    @PostMapping("/addUser")
-    public ResponseEntity<ResponseDTO> addUser(@RequestBody CustomerDTO dto){
-          CustomerDTO  obj = mainservice.save(dto);
+    @PostMapping("/addUser/{customerId}")
+    public ResponseEntity<ResponseDTO> addUser(@RequestBody CustomerDTO dto,@PathVariable long customerId){
+          CustomerDTO  obj = mainservice.save(dto,customerId);
 
           responseDTO.setError(false);
           responseDTO.setMsg("Created sucessfully");

@@ -18,4 +18,6 @@ public interface MainRepositry extends JpaRepository<CustomerDTO,Integer> {
 
 
     CustomerDTO deleteByCustomerId(long customerId);
+
+
 }
