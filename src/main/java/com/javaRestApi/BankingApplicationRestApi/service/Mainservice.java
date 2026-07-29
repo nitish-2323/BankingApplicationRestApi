@@ -2,8 +2,8 @@ package com.javaRestApi.BankingApplicationRestApi.service;
 
 import com.javaRestApi.BankingApplicationRestApi.Execption.UserExecption;
 import com.javaRestApi.BankingApplicationRestApi.Execption.UserNotFound;
-import com.javaRestApi.BankingApplicationRestApi.Model.CustomerDTO;
-import com.javaRestApi.BankingApplicationRestApi.Repositry.MainRepositry;
+import com.javaRestApi.BankingApplicationRestApi.Model.CustomerDTO.CustomerDto;
+import com.javaRestApi.BankingApplicationRestApi.Repository.CustomerRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class Mainservice {
     @Autowired
-    private MainRepositry mainRepositry;
+    private CustomerRepository mainRepositry;
 
-    public CustomerDTO save(CustomerDTO dto, long customerId) {
-       CustomerDTO obj = mainRepositry.findBycustomerId(customerId);
+    public CustomerDto save(CustomerDto dto, long customerId) {
+       CustomerDto obj = mainRepositry.findBycustomerId(customerId);
        if(obj != null){
             throw new UserExecption("Id must be unique,plz check Customer id");
         } else {
@@ -23,8 +23,8 @@ public class Mainservice {
        }
     }
 
-    public CustomerDTO getInfo(CustomerDTO dto, long customerId) {
-        CustomerDTO obj = mainRepositry.findBycustomerId(customerId);
+    public CustomerDto getInfo(CustomerDto dto, long customerId) {
+        CustomerDto obj = mainRepositry.findBycustomerId(customerId);
         if (obj == null) {
             throw new UserNotFound("Invalid employee user ");
         } else {
@@ -32,8 +32,8 @@ public class Mainservice {
         }
     }
 
-    public CustomerDTO updateObj(CustomerDTO dto,long customerId) {
-        CustomerDTO obj = mainRepositry.findBycustomerId(customerId);
+    public CustomerDto updateObj(CustomerDto dto, long customerId) {
+        CustomerDto obj = mainRepositry.findBycustomerId(customerId);
         if (obj == null) {
             throw new UserNotFound("CustomerId cannot found ");
         }
@@ -47,8 +47,8 @@ public class Mainservice {
 
     }
     @Transactional
-    public CustomerDTO delete(long customerId) {
-           CustomerDTO obj =mainRepositry.findBycustomerId(customerId);
+    public CustomerDto delete(long customerId) {
+           CustomerDto obj =mainRepositry.findBycustomerId(customerId);
            if(obj == null) {
                throw new UserNotFound("customerId not found for delete");
            }

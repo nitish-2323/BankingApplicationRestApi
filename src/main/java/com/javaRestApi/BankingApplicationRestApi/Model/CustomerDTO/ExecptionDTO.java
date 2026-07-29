@@ -1,4 +1,4 @@
-package com.javaRestApi.BankingApplicationRestApi.Model;
+package com.javaRestApi.BankingApplicationRestApi.Model.CustomerDTO;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.javaRestApi.BankingApplicationRestApi.Model;
+package com.javaRestApi.BankingApplicationRestApi.Model.CustomerDTO;
 
 
 import jakarta.persistence.Column;
@@ -10,7 +10,7 @@ import lombok.Data;
 @Entity
 @Table
 @Data
-public class CustomerDTO {
+public class CustomerDto {
     @Id
     private Long customerId;
     private String fullName;

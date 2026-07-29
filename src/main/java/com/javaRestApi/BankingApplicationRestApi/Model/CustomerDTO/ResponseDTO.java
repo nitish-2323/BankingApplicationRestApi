@@ -1,4 +1,4 @@
-package com.javaRestApi.BankingApplicationRestApi.Model;
+package com.javaRestApi.BankingApplicationRestApi.Model.CustomerDTO;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,7 @@ public class ResponseDTO {
     private int statusCode;
     private boolean error;
     private String msg;
-    private List<CustomerDTO> mydtos;
+    private List<CustomerDto> mydtos;
 
 
 

@@ -1,6 +1,6 @@
 //package com.javaRestApi.BankingApplicationRestApi.service;
 //
-//import com.javaRestApi.BankingApplicationRestApi.Model.CustomerDTO;
+//import com.javaRestApi.BankingApplicationRestApi.Model.CustomerDTO.CustomerDTO;
 //import com.javaRestApi.BankingApplicationRestApi.Repositry.MainRepositry;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.core.userdetails.User;

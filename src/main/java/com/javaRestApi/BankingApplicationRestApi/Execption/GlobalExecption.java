@@ -1,8 +1,7 @@
 package com.javaRestApi.BankingApplicationRestApi.Execption;
 
-import com.javaRestApi.BankingApplicationRestApi.Model.ExecptionDTO;
+import com.javaRestApi.BankingApplicationRestApi.Model.CustomerDTO.ExecptionDTO;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
