@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class Mainservice {
     @Autowired
     private CustomerRepository mainRepositry;
-
+// doubt
     public CustomerDto save(CustomerDto dto, long customerId) {
        CustomerDto obj = mainRepositry.findBycustomerId(customerId);
        if(obj != null){
@@ -46,6 +46,7 @@ public class Mainservice {
         return mainRepositry.save(obj);
 
     }
+    //doubt
     @Transactional
     public CustomerDto delete(long customerId) {
            CustomerDto obj =mainRepositry.findBycustomerId(customerId);
