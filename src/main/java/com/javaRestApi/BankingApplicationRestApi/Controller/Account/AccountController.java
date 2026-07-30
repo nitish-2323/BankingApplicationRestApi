@@ -1,45 +1,70 @@
 package com.javaRestApi.BankingApplicationRestApi.Controller.Account;
 
-import com.javaRestApi.BankingApplicationRestApi.Model.AccountDTO.AccountRequestDTO;
+import com.javaRestApi.BankingApplicationRestApi.Model.AccountDTO.Account;
 import com.javaRestApi.BankingApplicationRestApi.Model.AccountDTO.AccountResponseDTO;
+import com.javaRestApi.BankingApplicationRestApi.Model.CustomerDTO.CustomerDto;
 import com.javaRestApi.BankingApplicationRestApi.service.Account.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/account")
+
 public class AccountController {
-
     @Autowired
-    private AccountService accountService;
+    private AccountService service;
+    @Autowired
+    private AccountResponseDTO accountResponseDTO;
 
-    // Create Account
-    @PostMapping("/create")
-    public AccountResponseDTO createAccount(@RequestBody AccountRequestDTO request) {
-        return accountService.createAccount(request);
+    @PostMapping("/createAccount")
+    public ResponseEntity<AccountResponseDTO> createAccount(@RequestBody Account account) {
+        Account serviceAccount = service.createAccount(account);
+        accountResponseDTO.setError(false);
+        accountResponseDTO.setMsg("Account created sucessfully ");
+        accountResponseDTO.setStatusCode(201);
+        List<Account> list = new ArrayList<>();
+        list.add(serviceAccount);
+        accountResponseDTO.setMydtos(list);
+        return new ResponseEntity<>(accountResponseDTO, HttpStatus.CREATED);
     }
 
-    // Get Account By Id
-    @GetMapping("/{accountId}")
-    public AccountResponseDTO getAccount(@PathVariable Long accountId) {
-        return accountService.getAccount(accountId);
+    @GetMapping("/info/{accountNumber}")
+    public ResponseEntity<AccountResponseDTO> infoDetails(@PathVariable String accountNumber) {
+        Account account = service.getInfo(accountNumber);
+        accountResponseDTO.setStatusCode(200);
+        accountResponseDTO.setError(false);
+        accountResponseDTO.setMsg("Account is found sucessfully ");
+        List<Account> list = new ArrayList<>();
+        list.add(account);
+        accountResponseDTO.setMydtos(list);
+        return new ResponseEntity<>(accountResponseDTO, HttpStatus.OK);
     }
 
-    // Get All Accounts of a Customer
-    @GetMapping("/customer/{customerId}")
-    public List<AccountResponseDTO> getCustomerAccounts(@PathVariable Long customerId) {
-        return accountService.getCustomerAccounts(customerId);
+       @DeleteMapping("/deleteAccount/{accountNumber}")
+    public ResponseEntity<AccountResponseDTO> deleteAccount(@PathVariable String accountNumber ){
+        Account account = service.deleteAccount(accountNumber);
+           accountResponseDTO.setStatusCode(200);
+           accountResponseDTO.setError(false);
+           accountResponseDTO.setMsg("Account is deleted sucessfully ");
+           List<Account> list = new ArrayList<>();
+           list.add(account);
+           accountResponseDTO.setMydtos(list);
+           return new ResponseEntity<>(accountResponseDTO, HttpStatus.OK);
+       }
+      @PutMapping("/updateAccount/{accountNumber}")
+    public ResponseEntity<AccountResponseDTO> updateAccount(@PathVariable String accountNumber,@RequestBody Account obj){
+        Account account =service.updateAccount(accountNumber,obj);
+          accountResponseDTO.setStatusCode(200);
+          accountResponseDTO.setError(false);
+          accountResponseDTO.setMsg("Account is updated sucessfully ");
+          List<Account> list = new ArrayList<>();
+          list.add(account);
+          accountResponseDTO.setMydtos(list);
+          return new ResponseEntity<>(accountResponseDTO, HttpStatus.OK);
+      }
     }
 
-    // Close Account
-    @PutMapping("/close/{accountId}")
-    public String closeAccount(@PathVariable Long accountId) {
-
-        accountService.closeAccount(accountId);
-
-        return "Account Closed Successfully";
-    }
-
-}
