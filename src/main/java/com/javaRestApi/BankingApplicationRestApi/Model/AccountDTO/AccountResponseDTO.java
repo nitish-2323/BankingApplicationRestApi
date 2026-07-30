@@ -1,17 +1,16 @@
 package com.javaRestApi.BankingApplicationRestApi.Model.AccountDTO;
 
+import com.javaRestApi.BankingApplicationRestApi.Model.CustomerDTO.CustomerDto;
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
-@Data
+import java.util.List;
+
+@Component
+ @Data
 public class AccountResponseDTO {
-
-    private Long accountId;
-
-    private String accountNumber;
-
-    private String accountType;
-
-    private Double balance;
-
-    private String status;
+    private int statusCode;
+    private boolean error;
+    private String msg;
+    private List<Account> mydtos;
 }
