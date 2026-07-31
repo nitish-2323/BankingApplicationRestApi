@@ -1,0 +1,11 @@
+package com.javaRestApi.BankingApplicationRestApi.Model.WithdrawalDTO;
+
+import lombok.Data;
+import org.springframework.stereotype.Component;
+
+@Component
+@Data
+public class WithdrawalDTO {
+    private double amount;
+
+}

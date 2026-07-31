@@ -1,0 +1,14 @@
+package com.javaRestApi.BankingApplicationRestApi.Model.WithdrawalDTO;
+
+import lombok.Data;
+import org.springframework.stereotype.Component;
+
+@Component
+@Data
+public class WithdrawalResponseDTO {
+    private String message;
+    private String accountNumber;
+    private double withdrawAmount;
+    private double remainingBalance;
+
+}
