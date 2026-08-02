@@ -3,10 +3,12 @@ package com.javaRestApi.BankingApplicationRestApi.Model.AccountDTO;
 import com.javaRestApi.BankingApplicationRestApi.Model.CustomerDTO.CustomerDto;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 @Entity
 @Table
 @Data
+
 public class Account {
 
     @Id
