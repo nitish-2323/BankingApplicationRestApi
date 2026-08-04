@@ -21,7 +21,7 @@ public class DepositController {
     private DepositService service;
     @Autowired
     private ResponseDepositDTO responseDepositDTO;
-    @PatchMapping("/depositAmount/{accountNumber}")
+    @PostMapping("/depositAmount/{accountNumber}")
     public ResponseEntity<ResponseDepositDTO>deposit(@PathVariable String accountNumber,
                                                      @RequestBody DepositDTO depositDTO){
         Account obj= service.deposit(accountNumber,depositDTO);
