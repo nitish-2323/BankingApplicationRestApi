@@ -6,7 +6,7 @@ import com.javaRestApi.BankingApplicationRestApi.Model.AccountDTO.Account;
 import com.javaRestApi.BankingApplicationRestApi.Model.TransferAmount.TransferDTO;
 import com.javaRestApi.BankingApplicationRestApi.Model.TransferAmount.TransferRequestDTO;
 import com.javaRestApi.BankingApplicationRestApi.Repository.AccountRepositry;
-import com.javaRestApi.BankingApplicationRestApi.Repository.TransactionalRepositry;
+import com.javaRestApi.BankingApplicationRestApi.Repository.TransferRepositry;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class TransferService {
     @Autowired
     private AccountRepositry repositry;
     @Autowired
-    private TransactionalRepositry transactionalRepositry;
+    private TransferRepositry transactionalRepositry;
 
     public TransferRequestDTO transfer(TransferRequestDTO requestDTO) {
         Account sender = repositry.findByAccountNumber(requestDTO.getFromAccountNumber());
