@@ -3,9 +3,11 @@ package com.javaRestApi.BankingApplicationRestApi.service.TransferService;
 import com.javaRestApi.BankingApplicationRestApi.Execption.InsufficentAmount;
 import com.javaRestApi.BankingApplicationRestApi.Execption.UserNotFound;
 import com.javaRestApi.BankingApplicationRestApi.Model.AccountDTO.Account;
+import com.javaRestApi.BankingApplicationRestApi.Model.TransactionDTO.Transaction;
 import com.javaRestApi.BankingApplicationRestApi.Model.TransferAmount.TransferDTO;
 import com.javaRestApi.BankingApplicationRestApi.Model.TransferAmount.TransferRequestDTO;
 import com.javaRestApi.BankingApplicationRestApi.Repository.AccountRepositry;
+import com.javaRestApi.BankingApplicationRestApi.Repository.TransactionalRepositry;
 import com.javaRestApi.BankingApplicationRestApi.Repository.TransferRepositry;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +23,9 @@ public class TransferService {
     @Autowired
     private AccountRepositry repositry;
     @Autowired
-    private TransferRepositry transactionalRepositry;
-
+    private TransferRepositry transferRepositry;
+   @Autowired
+   private TransactionalRepositry transactionalRepositry;
     public TransferRequestDTO transfer(TransferRequestDTO requestDTO) {
         Account sender = repositry.findByAccountNumber(requestDTO.getFromAccountNumber());
         Account receiver = repositry.findByAccountNumber(requestDTO.getToAccountNumber());
@@ -56,7 +59,33 @@ public class TransferService {
         transferDTO.setStatus("Sucess");
         transferDTO.setMessage("Money transferred successfully");
         transferDTO.setTransactionDateTime(LocalDateTime.now());
-        transactionalRepositry.save(transferDTO);
+
+        Transaction senderTransaction = new Transaction();
+
+        senderTransaction.setAccountNumber(sender.getAccountNumber());
+        senderTransaction.setTransactionType("TRANSFER_OUT");
+       senderTransaction.setAmount(requestDTO.getAmount());
+        senderTransaction.setBalanceAfterTransaction(sender.getBalance());
+        senderTransaction.setReferenceAccount(receiver.getAccountNumber());
+        senderTransaction.setStatus("SUCCESS");
+        senderTransaction.setDescription("Money Transfer");
+        senderTransaction.setTransactionDate(LocalDateTime.now());
+
+        transactionalRepositry.save(senderTransaction);
+
+        Transaction receiverTransaction = new Transaction();
+
+        receiverTransaction.setAccountNumber(receiver.getAccountNumber());
+        receiverTransaction.setTransactionType("TRANSFER_IN");
+        receiverTransaction.setAmount(requestDTO.getAmount());
+        receiverTransaction.setBalanceAfterTransaction(receiver.getBalance());
+        receiverTransaction.setReferenceAccount(sender.getAccountNumber());
+        receiverTransaction.setStatus("SUCCESS");
+        receiverTransaction.setDescription("Money Received");
+        receiverTransaction.setTransactionDate(LocalDateTime.now());
+
+        transactionalRepositry.save(receiverTransaction);
+        transferRepositry.save(transferDTO);
         return requestDTO;
 
 
