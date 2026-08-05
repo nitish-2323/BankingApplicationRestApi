@@ -4,10 +4,12 @@ import com.javaRestApi.BankingApplicationRestApi.Execption.InsufficentAmount;
 import com.javaRestApi.BankingApplicationRestApi.Execption.UserNotFound;
 import com.javaRestApi.BankingApplicationRestApi.Model.AccountDTO.Account;
 import com.javaRestApi.BankingApplicationRestApi.Model.AccountDTO.AccountResponseDTO;
+import com.javaRestApi.BankingApplicationRestApi.Model.TransactionDTO.Transaction;
 import com.javaRestApi.BankingApplicationRestApi.Model.WithdrawalDTO.Withdrawal;
 import com.javaRestApi.BankingApplicationRestApi.Model.WithdrawalDTO.WithdrawalDTO;
 import com.javaRestApi.BankingApplicationRestApi.Model.WithdrawalDTO.WithdrawalResponseDTO;
 import com.javaRestApi.BankingApplicationRestApi.Repository.AccountRepositry;
+import com.javaRestApi.BankingApplicationRestApi.Repository.TransactionalRepositry;
 import com.javaRestApi.BankingApplicationRestApi.Repository.WithdrawalRepositry;
 import com.javaRestApi.BankingApplicationRestApi.service.Account.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class WithdrawalService {
     private AccountRepositry repositry;
    @Autowired
    private WithdrawalRepositry withdrawalRepositry;
+   @Autowired
+   private TransactionalRepositry transactionalRepositry;
     public Account withdrawal(String accountNumber, double amount) {
         Account account =repositry.findByAccountNumber(accountNumber);
           if(account == null){
@@ -53,6 +57,19 @@ public class WithdrawalService {
         withdrawal.setStatus("SUCCESS");
         withdrawal.setMessage("Amount withdrawn successfully.");
         withdrawal.setTransactionDateTime(LocalDateTime.now());
+
+        Transaction transaction = new Transaction();
+
+        transaction.setAccountNumber(account.getAccountNumber());
+        transaction.setTransactionType("WITHDRAWAL");
+        transaction.setAmount(amount);
+        transaction.setBalanceAfterTransaction(account.getBalance());
+        transaction.setReferenceAccount(null);
+        transaction.setStatus("SUCCESS");
+        transaction.setDescription("Cash Withdrawal");
+        transaction.setTransactionDate(LocalDateTime.now());
+
+        transactionalRepositry.save(transaction);
 
         withdrawalRepositry.save(withdrawal);
           repositry.save(account);
