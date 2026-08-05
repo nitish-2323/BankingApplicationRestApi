@@ -4,8 +4,10 @@ import com.javaRestApi.BankingApplicationRestApi.Execption.UserNotFound;
 import com.javaRestApi.BankingApplicationRestApi.Model.AccountDTO.Account;
 import com.javaRestApi.BankingApplicationRestApi.Model.DepositDTO.Deposit;
 import com.javaRestApi.BankingApplicationRestApi.Model.DepositDTO.DepositDTO;
+import com.javaRestApi.BankingApplicationRestApi.Model.TransactionDTO.Transaction;
 import com.javaRestApi.BankingApplicationRestApi.Repository.AccountRepositry;
 import com.javaRestApi.BankingApplicationRestApi.Repository.DepositRepositry;
+import com.javaRestApi.BankingApplicationRestApi.Repository.TransactionalRepositry;
 import com.javaRestApi.BankingApplicationRestApi.Repository.TransferRepositry;
 import com.javaRestApi.BankingApplicationRestApi.service.Account.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class DepositService {
     private AccountService service;
     @Autowired
     private DepositRepositry repositry;
+    @Autowired
+    private TransactionalRepositry transactionalRepositry;
     public Account deposit(String accountNumber, DepositDTO depositDTO) {
              Account obj =   accountRepositry.findByAccountNumber(accountNumber);
              if(obj == null){
@@ -43,7 +47,20 @@ public class DepositService {
         deposit.setStatus("SUCCESS");
         deposit.setMessage("Amount deposited successfully.");
         deposit.setTransactionDateTime(LocalDateTime.now());
-        repositry.save(deposit);
+
+        Transaction transaction = new Transaction();
+
+        transaction.setAccountNumber(obj.getAccountNumber());
+        transaction.setTransactionType("DEPOSIT");
+        transaction.setAmount(balance);
+        transaction.setBalanceAfterTransaction(obj.getBalance());
+        transaction.setReferenceAccount(null);
+        transaction.setStatus("SUCCESS");
+        transaction.setDescription("Cash Deposit");
+        transaction.setTransactionDate(LocalDateTime.now());
+
+        transactionalRepositry.save(transaction);
+         repositry.save(deposit);
         accountRepositry.save(obj);
              return obj;
     }
