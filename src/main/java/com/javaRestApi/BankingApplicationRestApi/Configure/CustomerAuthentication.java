@@ -25,7 +25,7 @@ public class CustomerAuthentication implements UserDetailsService {
         }
 
         return User.withUsername(user.getFullName())
-                .password(user.getPassword())
+                .password("{noop}"+user.getPassword())
                 .roles("ADMIN")
                 .build();
     }
