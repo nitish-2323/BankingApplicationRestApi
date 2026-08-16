@@ -3,11 +3,12 @@ package com.javaRestApi.BankingApplicationRestApi.service.Account;
 import com.javaRestApi.BankingApplicationRestApi.Execption.UserNotFound;
 import com.javaRestApi.BankingApplicationRestApi.Model.AccountDTO.Account;
 import com.javaRestApi.BankingApplicationRestApi.Repository.AccountRepositry;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-
 @Service
+@Transactional
 public class AccountService {
     @Autowired
     private AccountRepositry repositry;

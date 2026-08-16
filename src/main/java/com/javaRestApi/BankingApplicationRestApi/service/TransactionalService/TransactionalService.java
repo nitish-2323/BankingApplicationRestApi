@@ -6,6 +6,7 @@ import com.javaRestApi.BankingApplicationRestApi.Model.TransactionDTO.Transactio
 import com.javaRestApi.BankingApplicationRestApi.Model.TransactionDTO.TransactionResponse;
 import com.javaRestApi.BankingApplicationRestApi.Repository.AccountRepositry;
 import com.javaRestApi.BankingApplicationRestApi.Repository.TransactionalRepositry;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class TransactionalService {
     @Autowired
     private AccountRepositry account;

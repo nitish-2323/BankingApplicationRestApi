@@ -1,4 +1,4 @@
-package com.javaRestApi.BankingApplicationRestApi.Controller;
+package com.javaRestApi.BankingApplicationRestApi.Controller.Customer;
 
 import com.javaRestApi.BankingApplicationRestApi.Model.CustomerDTO.CustomerDto;
 import com.javaRestApi.BankingApplicationRestApi.Model.CustomerDTO.ResponseDTO;
